@@ -102,9 +102,9 @@ def www_decoder(prob_level):
                     sync = 0
                     print ("Range detection error!, waiting until the next sync\n")
                     
-  #**********************************************************************************************************************
-  # BCD decode for the moment only hours, minutes and year
-  #**********************************************************************************************************************
+#**********************************************************************************************************************
+# BCD decode 
+#**********************************************************************************************************************
                 else:
                     counter = counter + 1
 
@@ -117,7 +117,6 @@ def www_decoder(prob_level):
                     elif (counter == 8):
                         unit_year = unit_year +  8 * bit_val
                         
-
                     elif (counter == 11):                           # Decode minutes
                         minutes = minutes +  1 * bit_val
                     elif (counter == 12):
@@ -167,10 +166,6 @@ def www_decoder(prob_level):
                     elif (counter == 42):
                         days = days +  200 * bit_val                               
                         
-                        
-                                            
-                        
-
                     elif (counter == 52):                           # Decode tens of year
                         ten_year = ten_year +  10 * bit_val
                     elif (counter == 53):
@@ -190,18 +185,16 @@ def www_decoder(prob_level):
                         if (minutes == 60):
                             minutes = 0
                             hours = hours +1
+                            
                         if (hours == 24):
                             hours = 0
                         
-                        year = 2000 + ten_year + unit_year
-                                        
-                        
                         if (minutes in range (0,59) and hours in range (0,23)):
+                            year = 2000 + ten_year + unit_year
                             
                             res_date = date(year, 1, 1) + timedelta(days=days - 1)          #calculate the diference between 1-1-year
                         
                             res = res_date.strftime("%m-%d-%Y")
-                        
                         
                             output_str = str(hours) + ":" + str(minutes) + "  UTC     " + str(res)
                         
